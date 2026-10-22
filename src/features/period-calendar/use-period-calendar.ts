@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { addMonths, differenceInCalendarDays, startOfMonth } from "date-fns";
+import { useCurrentUser } from "@/features/auth/current-user-context";
 import { useToday } from "@/hooks/use-today";
 import type { IsoDate, PeriodRecord } from "@/types/period";
 import { HISTORY_LIMIT } from "./constants";
@@ -103,8 +104,9 @@ const describePrediction = (
 };
 
 export function usePeriodCalendar() {
+  const user = useCurrentUser();
   const today = useToday();
-  const { records, saveRecords } = usePeriodRecords();
+  const { records, saveRecords } = usePeriodRecords(user.id);
 
   // null이면 아직 사용자가 고르지 않은 것 → 오늘 기준으로 본다.
   const [pickedMonth, setPickedMonth] = useState<Date | null>(null);

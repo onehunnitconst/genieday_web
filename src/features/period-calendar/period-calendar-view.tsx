@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { IsoDate } from "@/types/period";
@@ -14,6 +15,8 @@ import type {
 } from "./use-period-calendar";
 
 export type PeriodCalendarViewProps = {
+  /** 화면 맨 위 계정 영역 (닉네임·로그아웃) */
+  accountBar: ReactNode;
   summary: CycleSummary | null;
   monthLabel: string;
   weeks: CalendarDay[][];
@@ -31,6 +34,7 @@ export type PeriodCalendarViewProps = {
 };
 
 export function PeriodCalendarView({
+  accountBar,
   summary,
   monthLabel,
   weeks,
@@ -48,6 +52,8 @@ export function PeriodCalendarView({
 }: PeriodCalendarViewProps) {
   return (
     <main className="flex flex-col gap-4 p-4 @tablet:gap-6 @tablet:p-6">
+      {accountBar}
+
       <CycleSummaryCard summary={summary} />
 
       <header className="flex items-center justify-between">

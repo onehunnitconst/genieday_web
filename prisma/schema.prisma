@@ -1,0 +1,103 @@
+// 연결 URL은 prisma.config.ts(CLI)와 src/server/db.ts(런타임)에서 설정한다
+// ddu_be와 같은 Supabase DB를 쓰되, 테이블은 period_check 스키마에 두고 이름에 p_ 접두사를 붙여 구분한다
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ── 인증 (Better Auth가 읽고 쓴다. 필드 구성은 Better Auth 코어 스키마를 따른다) ──
+
+/// 사용자 (Google 계정으로 가입)
+model User {
+  id            String   @id
+  /// Google 계정 이름
+  name          String
+  /// 앱에서 쓰는 이름: 한글·영문·숫자 2–12자. 가입 직후에는 비어 있고, 정해야 기록 화면으로 넘어간다
+  /// 형식 검사는 마이그레이션 SQL의 CHECK 제약과 src/utils/nickname.ts가 함께 담당한다
+  nickname      String?  @db.VarChar(12)
+  email         String   @unique
+  emailVerified Boolean  @default(false) @map("email_verified")
+  image         String?
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  sessions      Session[]
+  accounts      Account[]
+  periodRecords PeriodRecord[]
+
+  @@map("p_users")
+}
+
+/// 로그인 세션 (쿠키에는 token만 담긴다)
+model Session {
+  id        String   @id
+  userId    String   @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at") @db.Timestamptz(3)
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("p_sessions")
+}
+
+/// 외부 로그인 계정 연결 (providerId = "google")
+model Account {
+  id                    String    @id
+  userId                String    @map("user_id")
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at") @db.Timestamptz(3)
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at") @db.Timestamptz(3)
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt             DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("p_accounts")
+}
+
+/// OAuth state 등 일회용 검증 값
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime @map("expires_at") @db.Timestamptz(3)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([identifier])
+  @@map("p_verifications")
+}
+
+// ── 생리 기록 ──
+
+/// 생리 기록 한 건 (시작일~종료일, 양 끝 포함)
+model PeriodRecord {
+  /// 클라이언트가 만든 UUID (기기에 저장돼 있던 기록을 옮길 때 같은 ID를 유지한다)
+  id        String   @id @db.Uuid
+  userId    String   @map("user_id")
+  startDate DateTime @map("start_date") @db.Date
+  endDate   DateTime @map("end_date") @db.Date
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, startDate])
+  @@map("p_period_records")
+}

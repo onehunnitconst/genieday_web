@@ -1,5 +1,6 @@
 "use client";
 
+import { AccountContainer } from "@/features/account/account-container";
 import { PeriodCalendarSkeleton } from "./components/period-calendar-skeleton";
 import { PeriodCalendarView } from "./period-calendar-view";
 import { usePeriodCalendar } from "./use-period-calendar";
@@ -7,11 +8,12 @@ import { usePeriodCalendar } from "./use-period-calendar";
 export function PeriodCalendarContainer() {
   const vm = usePeriodCalendar();
 
-  // 오늘 날짜와 기록은 기기에서만 읽을 수 있으므로 그 전까지는 뼈대를 보여준다.
+  // 오늘 날짜는 기기에서, 기록은 서버에서 읽어 오므로 그 전까지는 뼈대를 보여준다.
   if (!vm.isReady || !vm.selectedStatus) return <PeriodCalendarSkeleton />;
 
   return (
     <PeriodCalendarView
+      accountBar={<AccountContainer />}
       summary={vm.summary}
       monthLabel={vm.monthLabel}
       weeks={vm.weeks}
