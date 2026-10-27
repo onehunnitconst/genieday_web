@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import type { IsoDate } from "@/types/period";
 import { CalendarLegend } from "./components/calendar-legend";
 import { CycleSummaryCard } from "./components/cycle-summary-card";
@@ -15,8 +15,6 @@ import type {
 } from "./use-period-calendar";
 
 export type PeriodCalendarViewProps = {
-  /** 화면 맨 위 계정 영역 (닉네임·로그아웃) */
-  accountBar: ReactNode;
   summary: CycleSummary | null;
   monthLabel: string;
   weeks: CalendarDay[][];
@@ -34,7 +32,6 @@ export type PeriodCalendarViewProps = {
 };
 
 export function PeriodCalendarView({
-  accountBar,
   summary,
   monthLabel,
   weeks,
@@ -51,40 +48,37 @@ export function PeriodCalendarView({
   onDeletePeriod,
 }: PeriodCalendarViewProps) {
   return (
-    <main className="flex flex-col gap-4 p-4 @tablet:gap-6 @tablet:p-6">
-      {accountBar}
-
-      <CycleSummaryCard summary={summary} />
-
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold @tablet:text-2xl">{monthLabel}</h1>
-        <div className="flex items-center gap-1">
-          <Button variant="outline" size="sm" onClick={onToday}>
-            오늘
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-lg"
-            aria-label="이전 달"
-            onClick={onPrevMonth}
-          >
-            <ChevronLeft />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon-lg"
-            aria-label="다음 달"
-            onClick={onNextMonth}
-          >
-            <ChevronRight />
-          </Button>
-        </div>
-      </header>
-
-      <div className="flex flex-col gap-3">
-        <MonthCalendar weeks={weeks} onSelectDate={onSelectDate} />
-        <CalendarLegend />
-      </div>
+    <div className="flex flex-col gap-4 @tablet:gap-6">
+      <Card>
+        <CardHeader className="flex items-center justify-between">
+          <h2 className="text-heading-3">{monthLabel}</h2>
+          <div className="flex items-center gap-1">
+            <Button variant="outline" size="sm" onClick={onToday}>
+              오늘
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon-lg"
+              aria-label="이전 달"
+              onClick={onPrevMonth}
+            >
+              <ChevronLeft />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon-lg"
+              aria-label="다음 달"
+              onClick={onNextMonth}
+            >
+              <ChevronRight />
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-3">
+          <MonthCalendar weeks={weeks} onSelectDate={onSelectDate} />
+          <CalendarLegend />
+        </CardContent>
+      </Card>
 
       <SelectedDayPanel
         dayLabel={selectedDayLabel}
@@ -95,7 +89,9 @@ export function PeriodCalendarView({
         onDeletePeriod={onDeletePeriod}
       />
 
+      <CycleSummaryCard summary={summary} />
+
       <PeriodHistory items={history} onSelect={onSelectDate} />
-    </main>
+    </div>
   );
 }

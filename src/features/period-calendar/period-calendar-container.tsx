@@ -1,6 +1,5 @@
 "use client";
 
-import { AccountContainer } from "@/features/account/account-container";
 import { PeriodCalendarSkeleton } from "./components/period-calendar-skeleton";
 import { PeriodCalendarView } from "./period-calendar-view";
 import { usePeriodCalendar } from "./use-period-calendar";
@@ -13,7 +12,6 @@ export function PeriodCalendarContainer() {
 
   return (
     <PeriodCalendarView
-      accountBar={<AccountContainer />}
       summary={vm.summary}
       monthLabel={vm.monthLabel}
       weeks={vm.weeks}

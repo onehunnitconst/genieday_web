@@ -1,11 +1,5 @@
 import { ImageResponse } from "next/og";
-import {
-  LOGO_COLOR,
-  LOGO_DROP_PATH,
-  LOGO_MOON_COLOR,
-  LOGO_MOON_PATH,
-  LOGO_THIN_MOON_PATH,
-} from "@/components/logo";
+import { LOGO_COLOR, renderLogoShapes } from "@/components/logo";
 
 // iOS 홈 화면 아이콘. 모서리는 iOS가 둥글게 깎으므로 배경을 꽉 채운다.
 export const size = { width: 180, height: 180 };
@@ -25,9 +19,7 @@ export default function AppleIcon() {
         }}
       >
         <svg width="180" height="180" viewBox="0 0 64 64">
-          <path d={LOGO_MOON_PATH} fill={LOGO_MOON_COLOR} />
-          <path d={LOGO_THIN_MOON_PATH} fill={LOGO_MOON_COLOR} />
-          <path d={LOGO_DROP_PATH} fill="#fff" />
+          {renderLogoShapes()}
         </svg>
       </div>
     ),

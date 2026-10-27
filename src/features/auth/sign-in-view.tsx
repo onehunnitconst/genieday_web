@@ -18,7 +18,7 @@ export function SignInView({
         <h1>
           <Logo />
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-body-small text-muted-foreground">
           로그인하면 어느 기기에서든 같은 기록을 볼 수 있어요.
         </p>
       </div>
@@ -34,7 +34,7 @@ export function SignInView({
           {isSigningIn ? "Google로 이동하는 중…" : "Google로 계속하기"}
         </Button>
         {errorMessage && (
-          <p role="alert" className="text-center text-sm text-destructive">
+          <p role="alert" className="text-center text-body-small text-destructive">
             {errorMessage}
           </p>
         )}

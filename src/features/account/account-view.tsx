@@ -1,8 +1,8 @@
 import type { FormEvent } from "react";
-import { Pencil } from "lucide-react";
-import { LogoMark } from "@/components/logo";
+import { Pencil, UserRound } from "lucide-react";
 import { NicknameField } from "@/components/nickname-field";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogClose,
@@ -14,6 +14,7 @@ import {
 
 export type AccountViewProps = {
   nickname: string;
+  email: string;
   isEditOpen: boolean;
   nicknameValue: string;
   nicknameError: string | null;
@@ -22,11 +23,11 @@ export type AccountViewProps = {
   onEditOpenChange: (open: boolean) => void;
   onNicknameChange: (value: string) => void;
   onSaveNickname: () => void;
-  onSignOut: () => void;
 };
 
 export function AccountView({
   nickname,
+  email,
   isEditOpen,
   nicknameValue,
   nicknameError,
@@ -35,7 +36,6 @@ export function AccountView({
   onEditOpenChange,
   onNicknameChange,
   onSaveNickname,
-  onSignOut,
 }: AccountViewProps) {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -43,17 +43,22 @@ export function AccountView({
   };
 
   return (
-    <div className="flex items-center justify-between gap-2 text-sm text-muted-foreground">
-      <div className="flex min-w-0 items-center gap-1">
-        <LogoMark className="mr-1 size-6" />
-        <span className="truncate">{nickname}님의 기록</span>
-        <Button variant="ghost" size="icon-sm" aria-label="닉네임 수정" onClick={onOpenEdit}>
-          <Pencil />
-        </Button>
-      </div>
-      <Button variant="ghost" size="sm" onClick={onSignOut}>
-        로그아웃
-      </Button>
+    <>
+      <Card>
+        <CardContent className="flex items-center gap-3">
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-period-soft text-period">
+            <UserRound aria-hidden className="size-6" />
+          </span>
+          <div className="flex min-w-0 flex-1 flex-col">
+            <span className="truncate text-title">{nickname}</span>
+            <span className="truncate text-body-small text-muted-foreground">{email}</span>
+          </div>
+          <Button variant="outline" size="sm" onClick={onOpenEdit}>
+            <Pencil />
+            닉네임 수정
+          </Button>
+        </CardContent>
+      </Card>
 
       <Dialog open={isEditOpen} onOpenChange={onEditOpenChange}>
         <DialogContent>
@@ -80,6 +85,6 @@ export function AccountView({
           </form>
         </DialogContent>
       </Dialog>
-    </div>
+    </>
   );
 }

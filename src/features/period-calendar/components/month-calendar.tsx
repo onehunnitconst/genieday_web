@@ -17,7 +17,7 @@ export function MonthCalendar({ weeks, onSelectDate }: MonthCalendarProps) {
             key={label}
             role="columnheader"
             className={cn(
-              "text-center text-xs font-medium text-muted-foreground",
+              "text-center text-label-small text-muted-foreground",
               index === 0 && "text-destructive/80",
             )}
           >
@@ -105,7 +105,7 @@ function DayCell({ day, isWeekStart, isWeekEnd, onSelect }: DayCellProps) {
           .filter(Boolean)
           .join(" ")}
         className={cn(
-          "relative flex size-10 items-center justify-center rounded-full text-sm tabular-nums transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 @tablet:size-12 @tablet:text-base",
+          "relative flex size-10 items-center justify-center rounded-full text-numeric-small tabular-nums transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 @tablet:size-12 @tablet:text-numeric-medium",
           !day.isCurrentMonth && "opacity-35",
           day.band && BAND_TEXT_CLASS[day.band],
           isPeriodEdge && "bg-period font-semibold text-period-foreground",
@@ -115,7 +115,7 @@ function DayCell({ day, isWeekStart, isWeekEnd, onSelect }: DayCellProps) {
             !day.isOvulation &&
             "font-bold underline underline-offset-4",
           day.isSelected &&
-            "ring-2 ring-foreground ring-offset-2 ring-offset-background",
+            "ring-2 ring-foreground ring-offset-2 ring-offset-card",
         )}
       >
         {day.dayOfMonth}

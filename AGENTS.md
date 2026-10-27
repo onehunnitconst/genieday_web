@@ -65,6 +65,20 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `fixed` 요소(하단 탭바, 플로팅 버튼 등)는 셸을 벗어나므로 `fixed inset-x-0 mx-auto max-w-app`처럼 폭을 맞추거나, 셸 안에서 `sticky`를 쓴다.
 - 높이는 `h-screen` 대신 `dvh`를 쓰고, 노치 영역은 셸이 `env(safe-area-inset-*)`로 처리한다.
 
+### 디자인 시스템: OHC
+
+토큰 원본은 `../ohc_design_system`이며 `src/styles/ohc-tokens.css`로 가져왔다. Primary·Secondary만 앱 색으로 바꿨다.
+
+| 역할 | 앱 색 | 클래스 예시 |
+| --- | --- | --- |
+| Primary | 로즈 `#E44065` (생리) | `bg-primary-solid`, `text-primary-text`, `bg-period` |
+| Secondary | 틸 `#068C8C` (가임기) | `bg-secondary-solid`, `text-secondary-text`, `bg-fertile` |
+
+- 기본 Tailwind 팔레트는 지웠다. 색은 OHC 토큰(`bg-bg-canvas`, `text-text-secondary`, `bg-info-300` …)이나 shadcn 별칭(`bg-muted`, `text-muted-foreground`)으로만 쓴다.
+- 글자 크기는 텍스트 스타일(`text-heading-2`, `text-title`, `text-body-small`, `text-caption` …)을 쓰고 `text-sm`·`font-semibold` 조합은 쓰지 않는다.
+- OHC의 Desktop 값(뷰포트 48rem 이상)은 셸 폭과 맞지 않아 뺐다. 언제나 Mobile 값을 쓴다.
+- `cn`은 `@/utils/cn`(OHC 키를 아는 버전)을 쓴다. shadcn으로 추가한 컴포넌트의 `from "cn"`은 바꿔 준다.
+
 <!-- BEGIN:nextjs-agent-feedback -->
 
 ## Report Next.js feedback

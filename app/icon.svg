@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#e44065"/>
-  <path d="M15.5 27.4A18 18 0 0 0 45 48A28 28 0 0 1 15.5 27.4Z" fill="#ffe7e9"/>
-  <path d="M25.5 25.3A11 11 0 0 0 43.5 37.9A12 12 0 0 1 25.5 25.3Z" fill="#ffe7e9"/>
-  <path d="M40 10C40 10 33 17.5 33 23a7 7 0 0 0 14 0C47 17.5 40 10 40 10Z" fill="#fff"/>
+  <!-- src/components/logo.tsx의 LOGO_SHAPES와 같은 모양 (지니의 램프: 물방울 뚜껑 + 초승달 본체 + 반원 받침) -->
+  <rect width="64" height="64" rx="16" fill="#E44065"/>
+  <path d="M21 53A11 11 0 0 1 43 53Z" fill="#FEE7E9"/>
+  <path d="M9 24A25.13 25.13 0 0 0 55 24A37.06 37.06 0 0 1 9 24Z" fill="#FEE7E9"/>
+  <path d="M32 11C32 11 27.5 19 27.5 23.5a4.5 4.5 0 0 0 9 0C36.5 19 32 11 32 11Z" fill="#FFFFFF"/>
 </svg>

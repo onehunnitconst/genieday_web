@@ -12,7 +12,7 @@ export function CycleSummaryCard({ summary }: CycleSummaryCardProps) {
       <Card>
         <CardHeader>
           <CardTitle>다음 생리일 예측</CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-body-small text-muted-foreground">
             생리 시작일을 기록하면 다음 생리일과 가임기를 알려드려요.
           </p>
         </CardHeader>
@@ -25,15 +25,15 @@ export function CycleSummaryCard({ summary }: CycleSummaryCardProps) {
       <CardHeader>
         <CardTitle
           className={cn(
-            "text-lg @tablet:text-xl",
+            "text-heading-3",
             summary.isLate ? "text-destructive" : "text-period",
           )}
         >
           {summary.headline}
         </CardTitle>
-        <p className="text-sm text-muted-foreground">{summary.nextPeriodLabel}</p>
+        <p className="text-body-small text-muted-foreground">{summary.nextPeriodLabel}</p>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2 text-sm">
+      <CardContent className="flex flex-col gap-2 text-body-small">
         {summary.fertileLabel && (
           <SummaryRow label="가임기" value={summary.fertileLabel} />
         )}
@@ -42,7 +42,7 @@ export function CycleSummaryCard({ summary }: CycleSummaryCardProps) {
         )}
         <p className="text-muted-foreground">{summary.averagesLabel}</p>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-1 text-xs text-muted-foreground">
+      <CardFooter className="flex-col items-start gap-1 text-caption text-muted-foreground">
         <p>{summary.basisLabel}</p>
         <p>예측은 참고용이며 피임 수단으로 사용할 수 없어요.</p>
       </CardFooter>
@@ -57,7 +57,7 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
         <span aria-hidden className="size-2 rounded-full bg-fertile" />
         {label}
       </span>
-      <span className="font-medium">{value}</span>
+      <span className="text-numeric-small">{value}</span>
     </div>
   );
 }
