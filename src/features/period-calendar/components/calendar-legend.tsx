@@ -7,7 +7,7 @@ const LEGEND_ITEMS = [
 
 export function CalendarLegend() {
   return (
-    <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+    <ul className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-caption text-muted-foreground">
       {LEGEND_ITEMS.map((item) => (
         <li key={item.label} className="flex items-center gap-1.5">
           <span aria-hidden className={`size-3 rounded-full ${item.swatch}`} />

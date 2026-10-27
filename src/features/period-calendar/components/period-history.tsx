@@ -15,7 +15,7 @@ export function PeriodHistory({ items, onSelect }: PeriodHistoryProps) {
       </CardHeader>
       <CardContent>
         {items.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-body-small text-muted-foreground">
             달력에서 생리 시작일을 눌러 첫 기록을 남겨보세요.
           </p>
         ) : (
@@ -25,7 +25,7 @@ export function PeriodHistory({ items, onSelect }: PeriodHistoryProps) {
                 <button
                   type="button"
                   onClick={() => onSelect(item.startDate)}
-                  className="flex w-full items-center justify-between rounded-lg px-2 py-3 text-left text-sm hover:bg-muted"
+                  className="flex w-full items-center justify-between rounded-lg px-2 py-3 text-left text-body-medium hover:bg-muted"
                 >
                   <span className="flex items-center gap-2">
                     <span aria-hidden className="size-2 rounded-full bg-period" />

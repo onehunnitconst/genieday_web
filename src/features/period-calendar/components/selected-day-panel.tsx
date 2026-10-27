@@ -29,10 +29,10 @@ export function SelectedDayPanel({
       <CardHeader>
         <CardTitle>{dayLabel}</CardTitle>
         {predictionLabel && (
-          <p className="text-sm font-medium text-fertile">{predictionLabel} (예측)</p>
+          <p className="text-label-medium text-secondary-text">{predictionLabel} (예측)</p>
         )}
         {(status.kind !== "future" || !predictionLabel) && (
-          <p className="text-sm text-muted-foreground">{describeStatus(status)}</p>
+          <p className="text-body-small text-muted-foreground">{describeStatus(status)}</p>
         )}
       </CardHeader>
       {status.kind !== "future" && (
@@ -40,7 +40,7 @@ export function SelectedDayPanel({
           {status.kind === "none" && (
             <Button
               size="lg"
-              className="flex-1 bg-period text-period-foreground hover:bg-period/85"
+              className="flex-1"
               onClick={onStartPeriod}
             >
               생리 시작

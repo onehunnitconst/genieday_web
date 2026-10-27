@@ -29,8 +29,8 @@ export function NicknameSetupView({
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-8 p-6">
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-semibold">반가워요, {googleName}님</h1>
-        <p className="text-sm text-muted-foreground">앱에서 쓸 닉네임을 정해 주세요.</p>
+        <h1 className="text-heading-2">반가워요, {googleName}님</h1>
+        <p className="text-body-small text-muted-foreground">앱에서 쓸 닉네임을 정해 주세요.</p>
       </div>
 
       <form className="flex w-full max-w-xs flex-col gap-4" onSubmit={handleSubmit}>

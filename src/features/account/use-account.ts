@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useCurrentUser } from "@/features/auth/current-user-context";
-import { signOut } from "@/features/auth/use-auth";
 import { useNicknameForm } from "@/hooks/use-nickname-form";
 import { authClient } from "@/utils/auth-client";
 
@@ -33,6 +32,7 @@ export function useAccount() {
 
   return {
     nickname: user.nickname,
+    email: user.email,
     isEditOpen,
     nicknameValue: nicknameForm.value,
     nicknameError: nicknameForm.error,
@@ -41,6 +41,5 @@ export function useAccount() {
     changeEditOpen,
     changeNickname: nicknameForm.changeValue,
     saveNickname,
-    signOut,
   };
 }
