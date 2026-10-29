@@ -31,21 +31,26 @@ type TabLayoutProps = {
 /**
  * 로그인한 뒤의 화면 골격: 상단 헤더 · 본문 · 하단 탭바.
  * 헤더는 셸 안에서 sticky로 붙고, 탭바는 fixed라서 셸 폭(max-w-app)에 맞춘다.
+ * 펼친 폴더블(@wide)에서는 홈과 캘린더가 한 화면(HomeCalendarPanes)이라 탭바에 캘린더가 없다.
  */
 export function TabLayout({ children }: TabLayoutProps) {
   const pathname = usePathname();
   const current = TABS.find((tab) => isActive(tab, pathname));
   const isHome = current?.href === "/";
+  const isCalendar = current?.href === "/calendar";
 
   return (
     <>
       <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 bg-bg-canvas/90 px-page-margin backdrop-blur @tablet:px-6">
         <LogoMark className="size-6" />
-        {/* 홈에서는 탭 이름 대신 앱 이름을 브랜드 글꼴로 보여준다. */}
-        {isHome ? (
-          <h1 className="font-brand text-heading-2 font-normal">{APP_NAME}</h1>
-        ) : (
-          <h1 className="text-title">{current?.label ?? APP_NAME}</h1>
+        {/* 홈에서는 탭 이름 대신 앱 이름을 브랜드 글꼴로 보여준다. 펼친 폴더블에서는 캘린더도 홈과 함께 보이므로 마찬가지다. */}
+        {(isHome || isCalendar) && (
+          <h1 className={cn("font-brand text-heading-2 font-normal", !isHome && "hidden @wide:block")}>
+            {APP_NAME}
+          </h1>
+        )}
+        {!isHome && (
+          <h1 className={cn("text-title", isCalendar && "@wide:hidden")}>{current?.label ?? APP_NAME}</h1>
         )}
       </header>
 
@@ -63,13 +68,15 @@ export function TabLayout({ children }: TabLayoutProps) {
             const active = tab === current;
             const Icon = tab.icon;
             return (
-              <li key={tab.href} className="flex-1">
+              // 펼친 폴더블에서는 홈이 캘린더를 함께 보여주므로 캘린더 탭을 숨기고 홈 탭을 켠다.
+              <li key={tab.href} className={cn("flex-1", tab.href === "/calendar" && "@wide:hidden")}>
                 <Link
                   href={tab.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
                     "flex h-full flex-col items-center justify-center gap-1 text-label-small transition-colors outline-none focus-visible:shadow-focus",
                     active ? "text-text-primary" : "text-text-disabled",
+                    tab.href === "/" && isCalendar && "@wide:text-text-primary",
                   )}
                 >
                   <Icon aria-hidden className="size-6" />

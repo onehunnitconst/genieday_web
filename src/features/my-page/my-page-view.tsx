@@ -24,21 +24,25 @@ export function MyPageView({
   onSignOut,
 }: MyPageViewProps) {
   return (
-    <div className="flex flex-col gap-4 @tablet:gap-6">
-      {profile}
-      {partner}
-      {notifications}
-      {theme}
-      <Button
-        variant="ghost"
-        size="lg"
-        className="h-11 w-full text-text-secondary"
-        disabled={isSigningOut}
-        onClick={onSignOut}
-      >
-        <LogOut />
-        {isSigningOut ? "로그아웃하는 중…" : "로그아웃"}
-      </Button>
+    <div className="panes">
+      <div className="flex flex-col gap-4 @tablet:gap-6">
+        {profile}
+        {partner}
+      </div>
+      <div className="flex flex-col gap-4 @tablet:gap-6">
+        {notifications}
+        {theme}
+        <Button
+          variant="ghost"
+          size="lg"
+          className="h-11 w-full text-text-secondary"
+          disabled={isSigningOut}
+          onClick={onSignOut}
+        >
+          <LogOut />
+          {isSigningOut ? "로그아웃하는 중…" : "로그아웃"}
+        </Button>
+      </div>
     </div>
   );
 }
