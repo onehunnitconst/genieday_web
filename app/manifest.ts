@@ -11,7 +11,6 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     scope: "/",
     display: "standalone",
-    orientation: "portrait",
     background_color: "#F8FAFC", // --ohc-bg-canvas
     theme_color: "#F8FAFC",
     icons: [
